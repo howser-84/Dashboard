@@ -13,7 +13,7 @@ public class DummyTaskService implements TaskService {
     }
 
     @Override
-    public List<Task> getTasks() {
+    public Iterable<Task> getTasks() {
         List<Task> result = new LinkedList<>();
         Task task = new Task();
         task.setName("dummy");

@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @Component
 public class TaskController {
@@ -27,7 +25,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/list")
-    public @ResponseBody List<Task> listTasks(){
+    public @ResponseBody Iterable<Task> listTasks(){
         return taskService.getTasks();
     }
 }

@@ -1,10 +1,7 @@
 package org.dashboard.main;
 
 
-import org.dashboard.main.service.DummyLoginService;
-import org.dashboard.main.service.DummyTaskService;
-import org.dashboard.main.service.LoginService;
-import org.dashboard.main.service.TaskService;
+import org.dashboard.main.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -16,7 +13,8 @@ public class Configuration {
 
     @Bean
     public TaskService getTaskService(){
-        return new DummyTaskService();
+        return new DBTaskService();
+        //return new DummyTaskService();
     }
 
     @Bean
