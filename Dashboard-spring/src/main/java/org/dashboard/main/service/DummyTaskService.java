@@ -16,9 +16,16 @@ public class DummyTaskService implements TaskService {
     public List<Task> getTasks() {
         List<Task> result = new LinkedList<>();
         Task task = new Task();
-        task.setDescription("dummy task");
-        task.setId(new Long(1));
+        task.setName("dummy");
+        task.setDescription("this is a dummy task");
+        task.setId(new Long(123));
         result.add(task);
+
+        Task anotherTask = new Task();
+        anotherTask.setName("another dummy");
+        anotherTask.setDescription("this is yet another dummy task");
+        anotherTask.setId(new Long(127));
+        result.add(anotherTask);
         return result;
     }
 }
