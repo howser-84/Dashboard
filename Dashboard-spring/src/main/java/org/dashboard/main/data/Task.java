@@ -2,13 +2,11 @@ package org.dashboard.main.data;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "tasks")
 public class Task implements Serializable{
 
     private static final long serialVersionUID = -3875258726204801153L;
