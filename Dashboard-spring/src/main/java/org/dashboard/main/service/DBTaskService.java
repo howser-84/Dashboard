@@ -1,13 +1,13 @@
 package org.dashboard.main.service;
 
 import org.dashboard.main.data.Task;
-import org.dashboard.main.data.TaskRepository;
+import org.dashboard.main.data.TaskDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class DBTaskService implements TaskService{
 
     @Autowired
-    private TaskRepository taskRepository;
+    private TaskDAO taskRepository;
 
 
     @Override

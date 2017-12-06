@@ -34,5 +34,6 @@ public class TaskController {
     @RequestMapping(value = "/add")
     public @ResponseBody String add(@RequestBody Task task){
         taskService.addTask(task);
+        return "Ok";
     }
 }
