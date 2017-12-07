@@ -10,12 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Component
 public class LoginController {
 
-    private LoginService loginService;
-
     @Autowired
-    public void setLoginService(LoginService loginService) {
-        this.loginService = loginService;
-    }
+    private LoginService loginService;
 
     @RequestMapping(value = "/login")
     public String login(){
