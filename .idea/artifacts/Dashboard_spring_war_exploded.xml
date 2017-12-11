@@ -63,6 +63,7 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-config:3.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:3.0.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:4.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.modelmapper:modelmapper:0.7.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">

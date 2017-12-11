@@ -1,7 +1,9 @@
 package org.dashboard.main.controller;
 
 import org.dashboard.main.data.Task;
+import org.dashboard.main.data.TaskDTO;
 import org.dashboard.main.service.TaskService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +18,7 @@ public class TaskController {
     private TaskService taskService;
 
     @Autowired
-    public void setTaskService(TaskService taskService) {
-        this.taskService = taskService;
-    }
+    private ModelMapper modelMapper;
 
     @RequestMapping(value = "/")
     public String home(){
@@ -31,8 +31,12 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/add")
-    public @ResponseBody String add(@RequestBody Task task){
-        taskService.addTask(task);
+    public @ResponseBody String add(@RequestBody TaskDTO task){
+        taskService.addTask(convert(task));
         return "Ok";
+    }
+
+    private Task convert(TaskDTO task) {
+        return modelMapper.map(task, Task.class);
     }
 }
