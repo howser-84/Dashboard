@@ -3,17 +3,16 @@ package org.dashboard.main.controller;
 import org.dashboard.main.data.User;
 import org.dashboard.main.data.UserDAO;
 import org.dashboard.main.data.UserDTO;
-import org.dashboard.main.service.LoginService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginController {
-
-    @Autowired
-    private LoginService loginService;
 
     @Autowired
     private UserDAO userDAO;
