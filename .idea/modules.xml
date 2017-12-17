@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Dashboard.iml" filepath="$PROJECT_DIR$/Dashboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Dashboard-angular/Dashboard-angular.iml" filepath="$PROJECT_DIR$/Dashboard-angular/Dashboard-angular.iml" />
       <module fileurl="file://$PROJECT_DIR$/Dashboard-spring/Dashboard-spring.iml" filepath="$PROJECT_DIR$/Dashboard-spring/Dashboard-spring.iml" />
     </modules>
   </component>
