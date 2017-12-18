@@ -2,9 +2,9 @@
 
 <head>
   <link rel="stylesheet" href="app.css">
+  <script type="text/javascript" ng:autobind src="http://code.angularjs.org/0.9.16/angular-0.9.16.js"></script>
 </head>
 <body>
-<script type="text/javascript" ng:autobind src="http://code.angularjs.org/0.9.16/angular-0.9.16.js"></script>
 
 <div ng:controller="TodosController">
   <input type="text" name="todoName" size="30" placeholder="Enter your todo here" ng:required />
@@ -41,8 +41,14 @@
   </pre>
 </div>
   <script>
-      function TodosController() {
-          this.todos = [{
+      function TodosController($http) {
+          console.log(http);
+          $http.get('http://localhost:8080/list').then(
+              function(response){
+                  this.todos = response.data;
+              }
+          );
+          /*this.todos = [{
                 name: "Learn angular",
                 description: "Some desc for 1st todo"},
               {
@@ -50,7 +56,7 @@
                 description: "Some desc for 2nd todo"},
               {
                 name: "Uninstall ruby",
-                description: "Some desc for 3rd todo"}];
+                description: "Some desc for 3rd todo"}];*/
       }
 
       TodosController.prototype = {
