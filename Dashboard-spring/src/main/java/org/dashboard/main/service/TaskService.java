@@ -7,4 +7,6 @@ public interface TaskService {
     public void addTask(Task task);
 
     public Iterable<Task> getTasks();
+
+    public void removeTask(Task task);
 }

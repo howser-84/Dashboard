@@ -19,4 +19,9 @@ public class DBTaskService implements TaskService{
     public Iterable<Task> getTasks() {
         return taskRepository.findAll();
     }
+
+    @Override
+    public void removeTask(Task task) {
+        taskRepository.delete(task);
+    }
 }

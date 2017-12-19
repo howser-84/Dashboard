@@ -6,10 +6,7 @@ import org.dashboard.main.service.TaskService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TaskController {
@@ -25,14 +22,23 @@ public class TaskController {
         return "hello";
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/list")
     public @ResponseBody Iterable<Task> listTasks(){
         return taskService.getTasks();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/add")
     public @ResponseBody String add(@RequestBody TaskDTO task){
         taskService.addTask(convert(task));
+        return "Ok";
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @RequestMapping(value = "/remove")
+    public @ResponseBody String remove(@RequestBody TaskDTO task){
+        taskService.removeTask(convert(task));
         return "Ok";
     }
 
