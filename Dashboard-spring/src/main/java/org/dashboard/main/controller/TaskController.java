@@ -30,16 +30,14 @@ public class TaskController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/add")
-    public @ResponseBody String add(@RequestBody TaskDTO task){
+    public void add(@RequestBody TaskDTO task){
         taskService.addTask(convert(task));
-        return "Ok";
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/remove")
-    public @ResponseBody String remove(@RequestBody TaskDTO task){
+    public void remove(@RequestBody TaskDTO task){
         taskService.removeTask(convert(task));
-        return "Ok";
     }
 
     private Task convert(TaskDTO task) {

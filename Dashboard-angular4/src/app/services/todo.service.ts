@@ -7,28 +7,23 @@ export class TodoService {
 
   private todos: Todo[];
   private headers: HttpHeaders;
-  private nextId: number;
 
   constructor(private http : HttpClient) {
     this.repopulateTodos();
-    this.nextId = 0;
   }
 
   public addTodo(name: string, description: string): void{
-    console.log(this.todos);
-    //this.todos.push(new Todo(this.nextId, name, description));
-    this.headers = new HttpHeaders({'Content-type': 'application/json; charset=utf-8'});
-    this.http.post<Todo>("http://localhost:8080/add",{id: this.nextId, name: name, description: description});
-    this.nextId++;
-    this.repopulateTodos();
+    this.http.post("http://localhost:8080/add",{name: name, description: description})
+      .subscribe(data => {this.repopulateTodos()}, err =>{console.error("Something went very wrong.")});
   }
 
   public getTodos(): Todo[]{
     return this.todos;
   }
 
-  public removeTodo(id: number): void{
-    this.todos = this.todos.filter((todo) => todo.id !== id);
+  public removeTodo(todo: Todo): void{
+    this.http.post("http://localhost:8080/remove", {id: todo.id, name: todo.name, description:todo.description})
+      .subscribe(data => {this.repopulateTodos()}, err => {console.error("Something went very wrong.")});
   }
 
   public repopulateTodos(): void{

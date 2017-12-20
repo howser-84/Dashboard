@@ -28,4 +28,9 @@ public class DummyTaskService implements TaskService {
         result.add(anotherTask);
         return result;
     }
+
+    @Override
+    public void removeTask(Task task) {
+        //empty
+    }
 }
