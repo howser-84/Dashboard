@@ -17,6 +17,7 @@ public class TaskController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/")
     public String home(){
         return "hello";

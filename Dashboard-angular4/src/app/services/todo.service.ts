@@ -14,7 +14,7 @@ export class TodoService {
 
   public addTodo(name: string, description: string): void{
     this.http.post("http://localhost:8080/add",{name: name, description: description})
-      .subscribe(data => {this.repopulateTodos()}, err =>{console.error("Something went very wrong.")});
+      .subscribe(data => {this.repopulateTodos(); console.log(data)}, err =>{console.error("Something went very wrong."+err)});
   }
 
   public getTodos(): Todo[]{
@@ -23,11 +23,11 @@ export class TodoService {
 
   public removeTodo(todo: Todo): void{
     this.http.post("http://localhost:8080/remove", {id: todo.id, name: todo.name, description:todo.description})
-      .subscribe(data => {this.repopulateTodos()}, err => {console.error("Something went very wrong.")});
+      .subscribe(data => {this.repopulateTodos(); console.log(data)}, err => {console.error("Something went very wrong."+err)});
   }
 
   public repopulateTodos(): void{
     this.headers = new HttpHeaders({'Content-type': 'application/json; charset=utf-8'});
-    this.http.get<Todo[]>("http://localhost:8080/list",{headers:this.headers}).subscribe(data => {this.todos = data});
+    this.http.get<Todo[]>("http://localhost:8080/list",{headers:this.headers}).subscribe(data => {this.todos = data; console.log(data), err => {console.error("Something went very wrong."+err)}});
   }
 }
