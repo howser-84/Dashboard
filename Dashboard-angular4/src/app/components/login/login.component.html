@@ -1,0 +1,9 @@
+<div class="Login">
+  <div class="login-wrapper">
+    <app-header></app-header>
+    Username:<input type="text" [(ngModel)]="username" value={{username}}/>
+    Password:<input type="text" [(ngModel)]="password" value={{password}}/>
+    <button class="btn btn-primary" (click)="login()">Login</button>
+    <button class="btn btn-primary" (click)="register()">Register</button>
+  </div>
+</div>

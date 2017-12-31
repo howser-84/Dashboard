@@ -16,25 +16,25 @@ public class TaskController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(){
         return "hello";
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public @ResponseBody Iterable<Task> listTasks(){
         return taskService.getTasks();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void add(@RequestBody TaskDTO task){
         taskService.addTask(convert(task));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public void remove(@RequestBody TaskDTO task){
         taskService.removeTask(convert(task));

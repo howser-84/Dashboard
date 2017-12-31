@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -7,34 +7,42 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/of';
+import {Router} from '@angular/router';
+import {AuthService} from '../services/auth.service';
 
+@Injectable()
 export class AuthInterceptor implements HttpInterceptor{
 
-  constructor(){}
+  constructor(private router: Router, private authService: AuthService){}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     console.log('About to intercept a message ' + request.method);
+    console.log('Checking if user is logged: ' + this.authService.isLogged());
     if (request.method === 'OPTIONS'){
       return next.handle(request);
     }
 
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Basic amFjZWs6amFjZWsxMjM=` //authorization for jacek:jacek123
-      }
-    });
+    if (this.authService.isLogged()){
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Basic ` + this.authService.getEncodedUserCredentials()
+        }
+      });
+    }
 
     return next.handle(request).do((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
         console.log("Success response received");
+        this.router.navigateByUrl('');
       }
     }, (err: any) => {
-      if (err instanceof HttpErrorResponse) {
-        if (err.status === 401) {
-          console.error("401 response received");
-        }
-      }
+      //big assumption here - any errorneous responses will be treated as 401
+      //due to CORS mechanisms i'm unable to check status of error response and keep getting status 0 instead of 401
+      this.router.navigateByUrl('login');
     });
   }
 }
