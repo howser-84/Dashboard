@@ -6,10 +6,9 @@ import org.dashboard.main.data.UserDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class LoginController {
@@ -23,11 +22,18 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/login")
-    public String login(){
-        return "login";
+    public void login(@RequestBody UserDTO userDTO, HttpServletResponse response){
+        User user = userDAO.findByUsername(userDTO.getUsername());
+        if (user != null && passwordEncoder.matches(userDTO.getPassword(), user.getPassword())){
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/register")
     public @ResponseBody User register(@RequestBody UserDTO userDTO){
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
