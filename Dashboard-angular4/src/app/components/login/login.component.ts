@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit {
   }
 
   private register(): void{
-    this.authService.loginUser(this.username, this.password);
+    this.http.post('http://localhost:8080/register', {username: this.username, password: this.password})
+      .subscribe(data => {console.log('Login OK'); this.authService.loginUser(this.username, this.password);}, err => {console.error('Something went very wrong.'+ err)});
   }
 
 }
