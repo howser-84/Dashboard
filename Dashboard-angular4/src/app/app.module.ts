@@ -14,6 +14,7 @@ import {AuthService} from './services/auth.service';
 import {AuthInterceptor} from './classes/AuthInterceptor';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import {UserService} from './services/user.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -38,14 +39,12 @@ const routes: Routes = [
   providers: [
     TodoService,
     AuthService,
+    UserService,
     {
       provide: HTTP_INTERCEPTORS,
-      /*useFactory: function(router: Router, authService: AuthService) {
-        return new AuthInterceptor(router, authService);
-      },*/
       useClass: AuthInterceptor,
       multi: true,
-      deps: [Router, AuthService]
+      deps: [Router, UserService]
     }
   ],
   bootstrap: [AppComponent]

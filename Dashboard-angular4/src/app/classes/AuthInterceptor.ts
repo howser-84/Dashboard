@@ -12,24 +12,25 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
+import {UserService} from '../services/user.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor{
 
-  constructor(private router: Router, private authService: AuthService){}
+  constructor(private router: Router, private userService: UserService){}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     console.log('About to intercept a message ' + request.method);
-    console.log('Checking if user is logged: ' + this.authService.isLogged());
+    console.log('Checking if user is logged: ' + this.userService.isLogged());
     if (request.method === 'OPTIONS'){
       return next.handle(request);
     }
 
-    if (this.authService.isLogged()){
+    if (this.userService.isLogged()){
       request = request.clone({
         setHeaders: {
-          Authorization: `Basic ` + this.authService.getEncodedUserCredentials()
+          Authorization: `Basic ` + this.userService.getEncodedUserCredentials()
         }
       });
     }
