@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from '../../services/user.service';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,25 +10,17 @@ import {UserService} from '../../services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  private username: String;
-  private password: String;
+  showErrorMessage = false;
 
-  constructor(private userService: UserService, private http: HttpClient) {
-    this.username = '';
-    this.password = '';
-  }
+  constructor(private userService: UserService, private http: HttpClient) {}
 
   ngOnInit() {
   }
 
-  private login(): void{
-    this.http.post('http://localhost:8080/login', {username: this.username, password: this.password})
-      .subscribe(data => {console.log('Login OK'); this.userService.loginUser(this.username, this.password);}, err => {console.error('Something went very wrong.'+ err)});
-  }
-
-  private register(): void{
-    this.http.post('http://localhost:8080/register', {username: this.username, password: this.password})
-      .subscribe(data => {console.log('Login OK'); this.userService.loginUser(this.username, this.password);}, err => {console.error('Something went very wrong.'+ err)});
+  private login(loginForm: NgForm): void{
+    this.http.post('http://localhost:8080/login', {username: loginForm.value.username, password: loginForm.value.password})
+      .subscribe(data => {console.log('Login OK'); this.userService.loginUser(loginForm.value.username, loginForm.value.password); this.showErrorMessage = false; }
+      , err => {console.error('Something went very wrong.' + err); this.showErrorMessage = true; });
   }
 
 }
