@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from '../../services/user.service';
 import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,19 @@ export class LoginComponent implements OnInit {
 
   showErrorMessage = false;
 
-  constructor(private userService: UserService, private http: HttpClient) {}
+  constructor(private userService: UserService, private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
   }
 
   private login(loginForm: NgForm): void{
     this.http.post('http://localhost:8080/login', {username: loginForm.value.username, password: loginForm.value.password})
-      .subscribe(data => {console.log('Login OK'); this.userService.loginUser(loginForm.value.username, loginForm.value.password); this.showErrorMessage = false; }
+      .subscribe(data => {
+        console.log('Login OK');
+        this.userService.loginUser(loginForm.value.username, loginForm.value.password);
+        this.showErrorMessage = false;
+        this.router.navigateByUrl('');
+        }
       , err => {console.error('Something went very wrong.' + err); this.showErrorMessage = true; });
   }
 

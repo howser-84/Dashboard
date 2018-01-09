@@ -35,15 +35,6 @@ export class AuthInterceptor implements HttpInterceptor{
       });
     }
 
-    return next.handle(request).do((event: HttpEvent<any>) => {
-      if (event instanceof HttpResponse) {
-        console.log("Success response received");
-        this.router.navigateByUrl('');
-      }
-    }, (err: any) => {
-      //big assumption here - any errorneous responses will be treated as 401
-      //due to CORS mechanisms i'm unable to check status of error response and keep getting status 0 instead of 401
-      this.router.navigateByUrl('login');
-    });
+    return next.handle(request);
   }
 }
