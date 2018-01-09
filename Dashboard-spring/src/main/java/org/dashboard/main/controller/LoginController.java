@@ -35,10 +35,17 @@ public class LoginController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/register")
-    public @ResponseBody User register(@RequestBody UserDTO userDTO){
-        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        User newUser = convert(userDTO);
-        return userDAO.save(newUser);
+    public void register(@RequestBody UserDTO userDTO, HttpServletResponse response){
+        User user = userDAO.findByUsername(userDTO.getUsername());
+        if (user == null){
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            User newUser = convert(userDTO);
+            userDAO.save(newUser);
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+        }
+
     }
 
     private User convert(UserDTO userDTO) {

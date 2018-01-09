@@ -16,10 +16,12 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import {UserService} from './services/user.service';
 import {IsLoggedIn} from './classes/is-logged-in';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [IsLoggedIn]},
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent}
 ];
 
 @NgModule({
@@ -29,7 +31,8 @@ const routes: Routes = [
     TodoInputComponent,
     TodoItemComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

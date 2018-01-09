@@ -1,10 +1,9 @@
-<div class="Login">
-  <div class="login-wrapper">
+<div class="Register">
+  <div class="register-wrapper">
     <app-header></app-header>
-    Access forbidden, please log in yourself.
-    <form #loginForm="ngForm" class="form-signin" (ngSubmit)="login(loginForm)">
-      <div class="alert alert-danger" role="alert" *ngIf="showErrorMessage && loginForm.submitted">
-        Wrong credentials!
+    <form #registerForm="ngForm" class="form-signin" (ngSubmit)="register(registerForm)">
+      <div class="alert alert-danger" role="alert" *ngIf="showErrorMessage && registerForm.submitted">
+        Username already in use!
       </div>
       <h2 class="form-signin-heading">Please sign in</h2>
       <label for="inputUsername" class="sr-only">Username</label>
@@ -13,10 +12,7 @@
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" class="form-control" placeholder="Password"
              name="password" required ngModel>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
     </form>
-    <p>
-      <a routerLink="/register">Don't have account? Register one</a>
-    </p>
   </div>
 </div>
