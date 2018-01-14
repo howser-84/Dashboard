@@ -10,7 +10,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { TodoInputComponent } from './components/todo-input/todo-input.component';
 import {TodoService} from './services/todo.service';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
-import {AuthService} from './services/auth.service';
 import {AuthInterceptor} from './classes/AuthInterceptor';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
@@ -18,11 +17,21 @@ import {UserService} from './services/user.service';
 import {IsLoggedIn} from './classes/is-logged-in';
 import { RegisterComponent } from './components/register/register.component';
 
+import { SocialLoginModule, AuthServiceConfig } from 'angular4-social-login';
+import { GoogleLoginProvider } from 'angular4-social-login';
+
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [IsLoggedIn]},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent}
 ];
+
+const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('743988849298-93ivuok2t10fh6crilmtdkagp8rhlfs0.apps.googleusercontent.com')
+  }
+]);
 
 @NgModule({
   declarations: [
@@ -38,11 +47,11 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    SocialLoginModule.initialize(config)
   ],
   providers: [
     TodoService,
-    AuthService,
     UserService,
     IsLoggedIn,
     {
