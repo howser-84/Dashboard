@@ -26,13 +26,6 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent}
 ];
 
-const config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider('743988849298-93ivuok2t10fh6crilmtdkagp8rhlfs0.apps.googleusercontent.com')
-  }
-]);
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,8 +40,7 @@ const config = new AuthServiceConfig([
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
-    SocialLoginModule.initialize(config)
+    RouterModule.forRoot(routes)
   ],
   providers: [
     TodoService,
