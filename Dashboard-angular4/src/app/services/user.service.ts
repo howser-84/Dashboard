@@ -43,7 +43,7 @@ export class UserService {
     return localStorage.getItem('password');
   }
 
-  private getToken(): string{
+  public getToken(): string{
     return localStorage.getItem('token');
   }
 }

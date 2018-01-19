@@ -1,24 +1,18 @@
 package org.dashboard.main.controller;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import org.dashboard.main.data.User;
 import org.dashboard.main.data.UserDAO;
 import org.dashboard.main.data.UserDTO;
+import org.dashboard.main.security.GoogleValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.util.Collections;
 
 @RestController
 public class LoginController {
@@ -60,36 +54,19 @@ public class LoginController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/googlelogin")
-    public void googleLogin(@RequestBody String idTokenString) throws Exception{
-        //version that works in company network :)
-        //HttpTransport transport = new NetHttpTransport.Builder().setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("10.144.1.10", 8080))).build();
-        HttpTransport transport = new NetHttpTransport();
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, new JacksonFactory())
-                .setAudience(Collections.singletonList("743988849298-93ivuok2t10fh6crilmtdkagp8rhlfs0.apps.googleusercontent.com"))
-                .build();
-
-        GoogleIdToken idToken = verifier.verify(idTokenString);
-        if (idToken != null) {
-            Payload payload = idToken.getPayload();
-
-            // Print user identifier
-            String userId = payload.getSubject();
-            System.out.println("User ID: " + userId);
-
-            // Get profile information from payload
-            String email = payload.getEmail();
-            boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-            String name = (String) payload.get("name");
-            String pictureUrl = (String) payload.get("picture");
-            String locale = (String) payload.get("locale");
-            String familyName = (String) payload.get("family_name");
-            String givenName = (String) payload.get("given_name");
-
-            // Use or store profile information
-            // ...
-
+    public void googleLogin(@RequestBody String idTokenString, HttpServletResponse response){
+        String userId = GoogleValidator.getUserID(idTokenString);
+        if (userId != null){
+            if (userDAO.findByUsername(userId) == null){
+                User googleUser = new User();
+                googleUser.setUsername(userId);
+                googleUser.setPassword("");
+                googleUser.setGoogleUser(true);
+                userDAO.save(googleUser);
+            }
+            response.setStatus(HttpServletResponse.SC_OK);
         } else {
-            System.out.println("Invalid ID token.");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
 
     }

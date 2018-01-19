@@ -21,7 +21,13 @@ export class AuthInterceptor implements HttpInterceptor{
       return next.handle(request);
     }
 
-    if (this.userService.isLogged()){
+    if (this.userService.isGoogleLogged()){
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ` + this.userService.getToken()
+        }
+      });
+    } else if (this.userService.isLogged()){
       request = request.clone({
         setHeaders: {
           Authorization: `Basic ` + this.userService.getEncodedUserCredentials()

@@ -29,6 +29,6 @@ public class MyUserDetailsService implements UserDetailsService{
                 true,
                 true,
                 true,
-                Collections.singleton(new SimpleGrantedAuthority("USER")));
+                Collections.singleton(new SimpleGrantedAuthority(user.isGoogleUser()?"GOOGLE-USER":"USER")));
     }
 }

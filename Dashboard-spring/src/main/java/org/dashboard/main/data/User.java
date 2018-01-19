@@ -11,6 +11,7 @@ public class User {
     @Id
     private String username;
     private String password;
+    private boolean googleUser;
 
     public String getUsername() {
         return username;
@@ -27,4 +28,8 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean isGoogleUser() {return googleUser;}
+
+    public void setGoogleUser(boolean googleUser) {this.googleUser = googleUser;}
 }
