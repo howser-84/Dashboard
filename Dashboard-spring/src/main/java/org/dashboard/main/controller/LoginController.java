@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Random;
 
 @RestController
 public class LoginController {
@@ -60,7 +61,7 @@ public class LoginController {
             if (userDAO.findByUsername(userId) == null){
                 User googleUser = new User();
                 googleUser.setUsername(userId);
-                googleUser.setPassword("");
+                googleUser.setPassword(passwordEncoder.encode(alphaNumericString(15)));
                 googleUser.setGoogleUser(true);
                 userDAO.save(googleUser);
             }
@@ -73,5 +74,16 @@ public class LoginController {
 
     private User convert(UserDTO userDTO) {
         return modelMapper.map(userDTO, User.class);
+    }
+
+    private String alphaNumericString(int len) {
+        String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random rnd = new Random();
+
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        }
+        return sb.toString();
     }
 }

@@ -1,7 +1,7 @@
 package org.dashboard.main;
 
+import org.dashboard.main.security.GoogleLoginFilter;
 import org.dashboard.main.security.MyAuthenticationProvider;
-import org.dashboard.main.security.MyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.Filter;
@@ -57,6 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Bean
     public Filter getAuthenticationFilter() throws Exception{
-        return new MyFilter("/*", authenticationManager());
+        return new GoogleLoginFilter();
     }
 }
