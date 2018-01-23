@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-@Component
+//@Component
 public class GoogleLoginFilter extends GenericFilterBean {
 
     @Autowired
@@ -35,19 +35,7 @@ public class GoogleLoginFilter extends GenericFilterBean {
                 }
                 User user = userDAO.findByUsername(userId);
                 String basicAuthExpr = userId + ":" + user.getPassword();
-                /*HttpServletRequest modifiedReq = new HttpServletRequestWrapper(req){
-                    @Override
-                    public String getHeader(String name) {
-                        if (name.equals("Authentication")){
-                            return "Basic " + Base64.encodeBase64String(basicAuthExpr.getBytes());
-                        }
-                        final String value = req.getParameter(name);
-                        if (value != null) {
-                            return value;
-                        }
-                        return super.getHeader(name);
-                    }
-                };*/
+                System.out.println("GoogleLoginFilter found user:pswd - "+basicAuthExpr);
                 MyServletRequestWrapper modifiedReq = new MyServletRequestWrapper(req);
                 modifiedReq.addHeader("Authorization","Basic " + Base64.getEncoder().encodeToString(basicAuthExpr.getBytes()));
                 filterChain.doFilter(modifiedReq, servletResponse);

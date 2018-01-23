@@ -8,6 +8,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
@@ -18,8 +20,8 @@ public class GoogleValidator {
 
     static{
         //version that works in company network :)
-        //HttpTransport transport = new NetHttpTransport.Builder().setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("10.144.1.10", 8080))).build();
-        transport = new NetHttpTransport();
+        transport = new NetHttpTransport.Builder().setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("10.144.1.10", 8080))).build();
+        //transport = new NetHttpTransport();
     }
 
     public static String getUserID(String token){
@@ -42,7 +44,7 @@ public class GoogleValidator {
 
             // Print user identifier
             String userId = payload.getSubject();
-            System.out.println("User ID: " + userId);
+            /*System.out.println("User ID: " + userId);
 
             // Get profile information from payload
             String email = payload.getEmail();
@@ -51,7 +53,7 @@ public class GoogleValidator {
             String pictureUrl = (String) payload.get("picture");
             String locale = (String) payload.get("locale");
             String familyName = (String) payload.get("family_name");
-            String givenName = (String) payload.get("given_name");
+            String givenName = (String) payload.get("given_name");*/
             return userId;
 
         }

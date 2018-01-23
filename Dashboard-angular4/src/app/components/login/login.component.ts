@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from '../../services/user.service';
 import {NgForm} from '@angular/forms';
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   public auth2: any;
 
-  constructor(private userService: UserService, private http: HttpClient, private router: Router) {}
+  constructor(private userService: UserService, private http: HttpClient, private router: Router, private ngZone: NgZone) {}
 
   ngOnInit() {}
 
@@ -47,7 +47,8 @@ export class LoginComponent implements OnInit {
           .subscribe(data =>{
             this.userService.loginGoogleUser(token);
             this.showErrorMessage = false;
-            this.router.navigateByUrl('');
+            //this.router.navigateByUrl('');
+            this.ngZone.run(() => this.router.navigateByUrl(''));
           }, err => {
             console.error('Token cannot be validated on server side');
           });

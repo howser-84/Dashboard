@@ -56,6 +56,7 @@ public class LoginController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/googlelogin")
     public void googleLogin(@RequestBody String idTokenString, HttpServletResponse response){
+        System.out.println("Received token: "+idTokenString);
         String userId = GoogleValidator.getUserID(idTokenString);
         if (userId != null){
             if (userDAO.findByUsername(userId) == null){
