@@ -10,19 +10,22 @@ export class TodoInputComponent implements OnInit {
 
   private todoName: string;
   private todoDescription: string;
+  private todoDeadline: Date;
 
   constructor(private todoService: TodoService) {
     this.todoName = '';
     this.todoDescription = '';
+    this.todoDeadline = new Date();
   }
 
   ngOnInit() {
   }
 
   private addTodo(): void{
-    this.todoService.addTodo(this.todoName, this.todoDescription);
+    this.todoService.addTodo(this.todoName, this.todoDescription, this.todoDeadline);
     this.todoName = '';
     this.todoDescription = '';
+    this.todoDeadline = new Date();
   }
 
 }
